@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.custom.i18n.resources" value="global" />
+	<constant name="struts.enable.SlashesInActionNames"	value="true" />
+	<package name="stanford" extends="struts-default,tiles-default,json-default" >
+	
+	   <!--Su Dung Tiles de thiet ke giao dien  -->
+		<result-types>
+			<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
+		</result-types>
+
+       <!--Phan Quyen  -->  
+		<interceptors>
+			<interceptor name="authorizationinterceptor"
+				class="vn.com.stanford.je1019.onlinecourses.interceptor.AuthorizationInterceptor" />
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="authorizationinterceptor" />
+			</interceptor-stack>						
+		</interceptors>
+		
+     <!-- Dang Nhap He Thong Quan Ly  -->
+		<action name="login"
+			class="vn.com.stanford.je1019.onlinecourses.action.DangNhapAction">
+			<result name="success">/admin/login.jsp</result>
+	        <result name="input">/admin/login.jsp</result>   
+		</action>
+
+		<action name="logout"
+			class="vn.com.stanford.je1019.onlinecourses.action.DangNhapAction"
+			method="logout">
+			<result name="success" type="redirectAction">trangchu</result> 
+			<result name="input" type="redirectAction">trangchu</result> 
+	<!--	<result name="success">/admin/login.jsp</result>
+	    	<result name="input">/admin/login.jsp</result>    -->
+		</action>
+
+		<action name="block"
+			class="vn.com.stanford.je1019.onlinecourses.action.DangNhapAction">
+			<result name="success">/admin/Block.jsp</result>
+			<result name="input">/admin/Block.jsp</result>
+		</action>
+
+		<action name="doLogin"
+			class="vn.com.stanford.je1019.onlinecourses.action.DangNhapAction"
+			method="doLogin">
+			<result name="success" type="redirectAction">trangchu</result> 
+	  <!--      <result name="success" type="tiles">QuanLyTrangChu</result>  -->
+			<result name="error">/admin/login.jsp</result>
+			<result name="input">/admin/login.jsp</result>    
+		</action>
+		
+		
+		<!-- Khai bao interceptor dinh nghia -->
+		<!-- Khai báo Trang Chu action theo PhanQuyenAction -->
+		<action name="qltrangchu1"
+			class="vn.com.stanford.je1019.onlinecourses.action.PhanQuyenAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success" type="tiles">QuanLyTrangChu</result>
+		</action>
+	    <action name="qltrangchu"
+			class="vn.com.stanford.je1019.onlinecourses.action.PhanQuyenAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success">/admin/quanlytrangchu.jsp</result>	       
+		</action>
+										
+		<!-- Khai báo Loai action -->
+		<action name="qlloai"
+			class="vn.com.stanford.je1019.onlinecourses.action.LoaiAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success" type="tiles">QuanLyLoai</result>
+		</action>
+		<action name="themloai"
+			class="vn.com.stanford.je1019.onlinecourses.action.LoaiAction"
+			method="themLoai">
+			<result name="success" type="json"></result>
+			<result name="error" type="json"></result>                                   
+		</action>
+		<action name="capnhatloai"
+			class="vn.com.stanford.je1019.onlinecourses.action.LoaiAction"
+			method="capNhatLoai">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="laythongtinchitietloai"
+			class="vn.com.stanford.je1019.onlinecourses.action.LoaiAction"
+			method="layThongTinChiTietLoai">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="xoaloai"
+			class="vn.com.stanford.je1019.onlinecourses.action.LoaiAction"
+			method="xoaLoai">
+			<result name="success" type="json"></result>
+		</action>
+
+		<!-- Khai báo ChuDe action -->
+		<action name="qlchude"
+			class="vn.com.stanford.je1019.onlinecourses.action.ChuDeAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success" type="tiles">QuanLyChuDe</result>
+		</action>			
+		<action name="chiTietChuDe"
+			class="vn.com.stanford.je1019.onlinecourses.action.ChuDeAction" 
+			method="chiTietChuDe">
+			<result name="success" type="tiles">themChuDe</result>
+		</action>		
+		<action name="themMoiChuDe"
+			class="vn.com.stanford.je1019.onlinecourses.action.ChuDeAction" method="themMoiHoacCapNhat"> 
+			<result type="redirectAction">qlchude</result>			
+            <result name="input" type="tiles">themChuDe</result>	   		                                            			
+		</action>		
+		<action name="xoaChuDe"
+			class="vn.com.stanford.je1019.onlinecourses.action.ChuDeAction" method="xoaThongTinChuDe">
+			<result type="redirectAction">qlchude</result>			
+		</action>
+
+		<!-- Khai báo GiangVien action -->
+		<action name="qlgiangvien"
+			class="vn.com.stanford.je1019.onlinecourses.action.GiangVienAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success" type="tiles">QuanLyGiangVien</result>
+		</action>
+		<action name="chiTietGiangVien"
+			class="vn.com.stanford.je1019.onlinecourses.action.GiangVienAction" 
+			method="chiTietGiangVien">
+			<result name="success" type="tiles">themGiangVien</result>
+		</action>		
+		<action name="themMoiGiangVien"
+			class="vn.com.stanford.je1019.onlinecourses.action.GiangVienAction" method="themMoiHoacCapNhat">
+			<result type="redirectAction">qlgiangvien</result>
+			<result name="input" type="tiles">themGiangVien</result>
+		</action>
+		<action name="xoaGiangVien"
+			class="vn.com.stanford.je1019.onlinecourses.action.GiangVienAction" method="xoaThongTinGiangVien">
+			<result type="redirectAction">qlgiangvien</result>			
+		</action>
+		<action name="timKiemGiangVien"
+			class="vn.com.stanford.je1019.onlinecourses.action.GiangVienAction"
+			method="timKiemGiangVien">
+
+	<!-- <interceptor-ref name="authorizationinterceptor" /> <result name="success" 
+				type="redirectAction">qlgiangvien</result> -->
+			<result name="success" type="tiles">QuanLyGiangVien</result>
+		</action>
+
+		<!-- Khai báo KhachHang action -->
+		<action name="qlkhachhang"
+			class="vn.com.stanford.je1019.onlinecourses.action.KhachHangAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success" type="tiles">QuanLyKhachHang</result>
+		</action>
+		<action name="themKhachHang"
+			class="vn.com.stanford.je1019.onlinecourses.action.KhachHangAction"
+			method="themKhachHang">
+			<result name="success" type="json">
+			</result>
+		</action>
+		<action name="capNhatKhachHang"
+			class="vn.com.stanford.je1019.onlinecourses.action.KhachHangAction"
+			method="capNhatKhachHang">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="layChiTietKhachHang"
+			class="vn.com.stanford.je1019.onlinecourses.action.KhachHangAction"
+			method="layChiTietKhachHang">
+			<result name="success" type="json">
+			</result>
+		</action>
+		<action name="xoaKhachHang"
+			class="vn.com.stanford.je1019.onlinecourses.action.KhachHangAction"
+			method="xoaKhachHang">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="timKiemKhachHang"
+			class="vn.com.stanford.je1019.onlinecourses.action.KhachHangAction"
+			method="timKiemKhachHang">
+			<result name="success" type="tiles">QuanLyKhachHang</result>
+		</action>
+
+		<!-- Khai báo HoaDon action -->
+		<action name="qlhoadon"
+			class="vn.com.stanford.je1019.onlinecourses.action.HoaDonAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success" type="tiles">QuanLyHoaDon</result>
+		</action>
+		<action name="themHoaDon"
+			class="vn.com.stanford.je1019.onlinecourses.action.HoaDonAction"
+			method="themHoaDon">
+			<result name="success" type="json">
+			</result>
+		</action>
+		<action name="capNhatHoaDon"
+			class="vn.com.stanford.je1019.onlinecourses.action.HoaDonAction"
+			method="capNhatHoaDon">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="layChiTietHoaDon"
+			class="vn.com.stanford.je1019.onlinecourses.action.HoaDonAction"
+			method="layChiTietHoaDon">
+			<result name="success" type="json">
+			</result>
+		</action>
+		<action name="xoaHoaDon"
+			class="vn.com.stanford.je1019.onlinecourses.action.HoaDonAction"
+			method="xoaHoaDon">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="chiTietHoaDon"
+			class="vn.com.stanford.je1019.onlinecourses.action.HoaDonAction"
+			method="chiTietHoaDon">
+	<!--	<interceptor-ref name="authorizationinterceptor" />  -->
+			<result name="success" type="tiles">QuanLyChiTietHoaDon</result>
+		</action>
+
+      <!-- Khai báo ChiTietHoaDon action -->
+      <action name="qlchitiethoadon"
+			class="vn.com.stanford.je1019.onlinecourses.action.ChiTietHoaDonAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success" type="tiles">QuanLyChiTietHoaDon</result>
+		</action>
+		<action name="themChiTietHoaDon"
+			class="vn.com.stanford.je1019.onlinecourses.action.ChiTietHoaDonAction"
+			method="themChiTietHoaDon">
+			<result name="success" type="json">
+			</result>
+		</action>
+		<action name="capNhatChiTietHoaDon"
+			class="vn.com.stanford.je1019.onlinecourses.action.ChiTietHoaDonAction"
+			method="capNhatChiTietHoaDon">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="layThongTinChiTietChiTietHoaDon"
+			class="vn.com.stanford.je1019.onlinecourses.action.ChiTietHoaDonAction"
+			method="layThongTinChiTietChiTietHoaDon">
+			<result name="success" type="json">
+			</result>
+		</action>
+		<action name="xoaChiTietHoaDon"
+			class="vn.com.stanford.je1019.onlinecourses.action.ChiTietHoaDonAction"
+			method="xoaChiTietHoaDon">
+			<result name="success" type="json"></result>
+		</action>
+
+		<!-- Khai báo KhoaHoc action -->
+		<action name="qlkhoahoc"
+			class="vn.com.stanford.je1019.onlinecourses.action.KhoaHocAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success" type="tiles">QuanLyKhoaHoc</result>
+		</action>		
+		<action name="chiTietKhoaHoc"
+			class="vn.com.stanford.je1019.onlinecourses.action.KhoaHocAction" 
+			method="chiTietKhoaHoc">
+			<result name="success" type="tiles">themKhoaHoc</result>
+		</action>		
+		<action name="themMoiKhoaHoc"
+			class="vn.com.stanford.je1019.onlinecourses.action.KhoaHocAction" method="themMoiHoacCapNhat">
+			<result type="redirectAction">qlkhoahoc</result>
+			<result name="input" type="tiles">themKhoaHoc</result>
+		</action>
+		<action name="xoaKhoaHoc"
+			class="vn.com.stanford.je1019.onlinecourses.action.KhoaHocAction" method="xoaThongTinKhoaHoc">
+			<result type="redirectAction">qlkhoahoc</result>			
+		</action>
+		<action name="timKiemKhoaHoc"
+			class="vn.com.stanford.je1019.onlinecourses.action.KhoaHocAction"
+			method="timKiemKhoaHoc">
+			<result name="success" type="tiles">QuanLyKhoaHoc</result>
+		</action>
+		 <action name="duyetKhoaHoc"
+			class="vn.com.stanford.je1019.onlinecourses.action.KhoaHocAction"
+			method="duyetKhoaHoc">
+			<result name="success" type="json"></result>
+		</action>
+        <action name="boDuyetKhoaHoc"
+			class="vn.com.stanford.je1019.onlinecourses.action.KhoaHocAction"
+			method="boDuyetKhoaHoc">
+			<result name="success" type="json"></result>
+		</action>
+		
+		<!-- XEM THONG TIN KHOA HOC -->
+		 <action name="layChiTietThongTinKhoaHoc"
+			class="vn.com.stanford.je1019.onlinecourses.action.KhoaHocAction"
+			method="layChiTietThongTinKhoaHoc">
+			<result name="success" type="json"></result>
+		</action>
+		
+
+		<!-- Khai báo BaiGiang action -->
+		<action name="qlbaigiang"
+			class="vn.com.stanford.je1019.onlinecourses.action.BaiGiangAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success" type="tiles">QuanLyBaiGiang</result>
+		</action>		
+		<action name="chiTietBaiGiang"
+			class="vn.com.stanford.je1019.onlinecourses.action.BaiGiangAction" 
+			method="chiTietBaiGiang">
+			<result name="success" type="tiles">themBaiGiang</result>
+		</action>		
+		<action name="themMoiBaiGiang"
+			class="vn.com.stanford.je1019.onlinecourses.action.BaiGiangAction" method="themMoiHoacCapNhat">
+			<result type="redirectAction">qlbaigiang</result>
+			<result name="input" type="tiles">themBaiGiang</result>
+		</action>
+		<action name="xoaBaiGiang"
+			class="vn.com.stanford.je1019.onlinecourses.action.BaiGiangAction" method="xoaThongTinBaiGiang">
+			<result type="redirectAction">qlbaigiang</result>			
+		</action>
+		<action name="timKiemBaiGiang"
+			class="vn.com.stanford.je1019.onlinecourses.action.BaiGiangAction"
+			method="timKiemBaiGiang">
+			<result name="success" type="tiles">QuanLyBaiGiang</result>
+		</action>
+        <action name="duyetBaiGiang"
+			class="vn.com.stanford.je1019.onlinecourses.action.BaiGiangAction"
+			method="duyetBaiGiang">
+			<result name="success" type="json"></result>
+		</action>
+        <action name="boDuyetBaiGiang"
+			class="vn.com.stanford.je1019.onlinecourses.action.BaiGiangAction"
+			method="boDuyetBaiGiang">
+			<result name="success" type="json"></result>
+		</action>
+
+
+
+
+		<!-- Khai báo ChucNang action -->
+		<action name="qlchucnang"
+			class="vn.com.stanford.je1019.onlinecourses.action.ChucNangAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success" type="tiles">QuanLyChucNang</result>
+		</action>
+		<action name="themchucnang"
+			class="vn.com.stanford.je1019.onlinecourses.action.ChucNangAction"
+			method="themChucNang">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="capnhatchucnang"
+			class="vn.com.stanford.je1019.onlinecourses.action.ChucNangAction"
+			method="capNhatChucNang">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="laythongtinchitietchucnang"
+			class="vn.com.stanford.je1019.onlinecourses.action.ChucNangAction"
+			method="layThongTinChiTietChucNang">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="xoachucnang"
+			class="vn.com.stanford.je1019.onlinecourses.action.ChucNangAction"
+			method="xoaChucNang">
+			<result name="success" type="json"></result>
+		</action>
+
+		<!-- Khai báo NguoiDung action -->
+		<action name="qlnguoidung"
+			class="vn.com.stanford.je1019.onlinecourses.action.NguoiDungAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success" type="tiles">QuanLyNguoiDung</result>
+		</action>
+		<action name="themnguoidung"
+			class="vn.com.stanford.je1019.onlinecourses.action.NguoiDungAction"
+			method="themNguoiDung">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="capnhatnguoidung"
+			class="vn.com.stanford.je1019.onlinecourses.action.NguoiDungAction"
+			method="capNhatNguoiDung">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="laythongtinchitietnguoidung"
+			class="vn.com.stanford.je1019.onlinecourses.action.NguoiDungAction"
+			method="layThongTinChiTietNguoiDung">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="xoanguoidung"
+			class="vn.com.stanford.je1019.onlinecourses.action.NguoiDungAction"
+			method="xoaNguoiDung">
+			<result name="success" type="json"></result>
+		</action>
+		 <action name="duyetNguoiDung"
+			class="vn.com.stanford.je1019.onlinecourses.action.NguoiDungAction"
+			method="duyetNguoiDung">
+			<result name="success" type="json"></result>
+		</action>
+        <action name="boDuyetNguoiDung"
+			class="vn.com.stanford.je1019.onlinecourses.action.NguoiDungAction"
+			method="boDuyetNguoiDung">
+			<result name="success" type="json"></result>
+		</action>
+
+
+		<!-- Khai báo VaiTro action -->
+		<action name="qlvaitro"
+			class="vn.com.stanford.je1019.onlinecourses.action.VaiTroAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success" type="tiles">QuanLyVaiTro</result>
+		</action>
+		<action name="themvaitro"
+			class="vn.com.stanford.je1019.onlinecourses.action.VaiTroAction"
+			method="themVaiTro">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="capnhatvaitro"
+			class="vn.com.stanford.je1019.onlinecourses.action.VaiTroAction"
+			method="capNhatVaiTro">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="laythongtinchitietvaitro"
+			class="vn.com.stanford.je1019.onlinecourses.action.VaiTroAction"
+			method="layThongTinChiTietVaiTro">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="xoavaitro"
+			class="vn.com.stanford.je1019.onlinecourses.action.VaiTroAction"
+			method="xoaVaiTro">
+			<result name="success" type="json"></result>
+		</action>
+
+		<!-- Khai báo PhanQuyen action -->
+		<action name="qlphanquyen"
+			class="vn.com.stanford.je1019.onlinecourses.action.PhanQuyenAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success" type="tiles">QuanLyPhanQuyen</result>
+		</action>
+		<action name="themPhanQuyen"
+			class="vn.com.stanford.je1019.onlinecourses.action.PhanQuyenAction"
+			method="themPhanQuyen">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="capNhatPhanQuyen"
+			class="vn.com.stanford.je1019.onlinecourses.action.PhanQuyenAction"
+			method="capNhatPhanQuyen">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="layThongTinChiTietPhanQuyen"
+			class="vn.com.stanford.je1019.onlinecourses.action.PhanQuyenAction"
+			method="layThongTinChiTietPhanQuyen">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="xoaPhanQuyen"
+			class="vn.com.stanford.je1019.onlinecourses.action.PhanQuyenAction"
+			method="xoaPhanQuyen">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="timKiemPhanQuyen"
+			class="vn.com.stanford.je1019.onlinecourses.action.PhanQuyenAction"
+			method="timKiemPhanQuyen">
+			<result name="success" type="tiles">QuanLyPhanQuyen</result>
+		</action>
+
+		<!-- Khai báo NhatKy action -->
+		<action name="qlnhatky"
+			class="vn.com.stanford.je1019.onlinecourses.action.NhatKyAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success" type="tiles">QuanLyNhatKy</result>
+		</action>
+		<action name="xoaNhatKy"
+			class="vn.com.stanford.je1019.onlinecourses.action.NhatKyAction"
+			method="xoaNhatKy">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="timKiemNhatKy"
+			class="vn.com.stanford.je1019.onlinecourses.action.NhatKyAction"
+			method="timKiemNhatKy">
+			<result name="success" type="tiles">QuanLyNhatKy</result>
+		</action>
+
+		<!-- Khai báo CapDo action -->
+		<action name="qlcapdo"
+			class="vn.com.stanford.je1019.onlinecourses.action.CapDoAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success" type="tiles">QuanLyCapDo</result>
+		</action>
+		<action name="themCapDo"
+			class="vn.com.stanford.je1019.onlinecourses.action.CapDoAction"
+			method="themCapDo">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="capNhatCapDo"
+			class="vn.com.stanford.je1019.onlinecourses.action.CapDoAction"
+			method="capNhatCapDo">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="layThongTinChiTietCapDo"
+			class="vn.com.stanford.je1019.onlinecourses.action.CapDoAction"
+			method="layThongTinChiTietCapDo">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="xoaCapDo"
+			class="vn.com.stanford.je1019.onlinecourses.action.CapDoAction"
+			method="xoaCapDo">
+			<result name="success" type="json"></result>
+		</action>
+
+		<!-- Khai báo NhanXet action -->
+		<action name="qlnhanxet"
+			class="vn.com.stanford.je1019.onlinecourses.action.NhanXetAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success" type="tiles">QuanLyNhanXet</result>
+		</action>
+		<action name="themNhanXet"
+			class="vn.com.stanford.je1019.onlinecourses.action.NhanXetAction"
+			method="themNhanXet">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="capNhatNhanXet"
+			class="vn.com.stanford.je1019.onlinecourses.action.NhanXetAction"
+			method="capNhatNhanXet">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="layThongTinChiTietNhanXet"
+			class="vn.com.stanford.je1019.onlinecourses.action.NhanXetAction"
+			method="layThongTinChiTietNhanXet">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="xoaNhanXet"
+			class="vn.com.stanford.je1019.onlinecourses.action.NhanXetAction"
+			method="xoaNhanXet">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="timKiemNhanXet"
+			class="vn.com.stanford.je1019.onlinecourses.action.NhanXetAction"
+			method="timKiemNhanXet">
+			<result name="success" type="tiles">QuanLyNhanXet</result>
+		</action>
+				
+		<!-- Khai báo NguoiDung_KhoaHoc action -->
+		<action name="qlnguoidung_khoahoc"
+			class="vn.com.stanford.je1019.onlinecourses.action.NguoiDung_KhoaHocAction">
+			<interceptor-ref name="authorizationinterceptor" />
+			<result name="success" type="tiles">QuanLyNguoiDung_KhoaHoc</result>
+		</action>
+		<action name="themNguoiDung_KhoaHoc"
+			class="vn.com.stanford.je1019.onlinecourses.action.NguoiDung_KhoaHocAction"
+			method="themNguoiDung_KhoaHoc">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="capNhatNguoiDung_KhoaHoc"
+			class="vn.com.stanford.je1019.onlinecourses.action.NguoiDung_KhoaHocAction"
+			method="capNhatNguoiDung_KhoaHoc">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="layThongTinChiTietNguoiDung_KhoaHoc"
+			class="vn.com.stanford.je1019.onlinecourses.action.NguoiDung_KhoaHocAction"
+			method="layThongTinChiTietNguoiDung_KhoaHoc">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="xoaNguoiDung_KhoaHoc"
+			class="vn.com.stanford.je1019.onlinecourses.action.NguoiDung_KhoaHocAction"
+			method="xoaNguoiDung_KhoaHoc">
+			<result name="success" type="json"></result>
+		</action>
+			<action name="timKiemNguoiDung_KhoaHoc"
+			class="vn.com.stanford.je1019.onlinecourses.action.NguoiDung_KhoaHocAction"
+			method="timKiemNguoiDung_KhoaHoc">
+			<result name="success" type="tiles">QuanLyNguoiDung_KhoaHoc</result>
+		</action>
+		
+		
+		<!-- Khai báo Theme ko dung Tiles de thiet ke giao dien -->
+		<!-- Khai báo Theme: Trang Chu -->
+		<action name="trangchu_NoTiles"
+			class="vn.com.stanford.je1019.onlinecourses.action.TrangChuAction">			
+			<result name="success" >web/trangChu.jsp</result>
+		</action>
+		<!-- Khai báo Theme: hinhAnhKhoaHoc -->
+		<action name="hinhanh_NoTiles"
+			class="vn.com.stanford.je1019.onlinecourses.action.HinhAnhAction">			
+			<result name="success" >web/hinhAnh.jsp</result>
+		</action>
+		<!-- Khai báo Theme: dangKyKhoaHoc -->
+		<action name="dangky_NoTiles"
+			class="vn.com.stanford.je1019.onlinecourses.action.DangKyAction">			
+			<result name="success" >web/dangKy.jsp</result>
+		</action>
+		<!-- Khai báo Theme: aboutUs -->
+		<action name="aboutUs_NoTiles"
+			class="vn.com.stanford.je1019.onlinecourses.action.AboutUsAction">			
+			<result name="success" >web/aboutUs.jsp</result>
+		</action>
+		
+		
+		<!-- Khai báo Theme dang Tiles -->
+		<!-- Khai báo Theme: Trang Chu -->
+		<action name="trangchu"
+			class="vn.com.stanford.je1019.onlinecourses.action_theme.TrangChuAction">			
+			<result name="success" type="tiles">TrangChu</result>
+		</action>
+		<action name="dangky"
+			class="vn.com.stanford.je1019.onlinecourses.action_theme.DangKyAction">			
+			<result name="success" type="tiles">DangKy</result>
+		</action>
+		<action name="aboutUs"
+			class="vn.com.stanford.je1019.onlinecourses.action_theme.AboutUsAction">			
+			<result name="success" type="tiles">AboutUs</result>
+		</action>
+		<action name="khoahoc"
+			class="vn.com.stanford.je1019.onlinecourses.action_theme.KhoaHocAction">			
+			<result name="success" type="tiles">KhoaHoc</result>
+		</action>
+		<action name="baigiang"
+			class="vn.com.stanford.je1019.onlinecourses.action_theme.BaiGiangAction">		  	   
+			<result name="success" type="tiles">BaiGiang</result>
+		</action>								
+		<action name="chude"
+			class="vn.com.stanford.je1019.onlinecourses.action_theme.ChuDeAction">			
+			<result name="success" type="tiles">ChuDe</result>
+		</action>
+		<action name="loai"
+			class="vn.com.stanford.je1019.onlinecourses.action_theme.TrangChuAction"
+			method="danhSachLoai">			
+			<result name="success" type="tiles">TrangChu</result>
+		</action>
+		<action name="layChuDeTheoLoai"
+			class="vn.com.stanford.je1019.onlinecourses.action_theme.TrangChuAction"
+			method="layChuDeTheoLoai">			
+			<result name="success" type="tiles">ChuDe</result>
+		</action>
+		<action name="layKhoaHocTheoChuDe"
+			class="vn.com.stanford.je1019.onlinecourses.action_theme.ChuDeAction"
+			method="layKhoaHocTheoChuDe">			
+			<result name="success" type="tiles">KhoaHoc</result>
+		</action>
+		<action name="layKhoaHocTheoCapDo"
+			class="vn.com.stanford.je1019.onlinecourses.action_theme.CapDoAction"
+			method="layKhoaHocTheoCapDo">			
+			<result name="success" type="tiles">KhoaHoc</result>
+		</action>
+		<action name="layBaiGiangTheoKhoaHoc"
+			class="vn.com.stanford.je1019.onlinecourses.action_theme.KhoaHocAction"
+			method="layBaiGiangTheoKhoaHoc">	
+			<result name="success" type="tiles">BaiGiangTheoKhoaHoc</result>
+		</action>
+		
+		<action name="dangKyTaiKhoan"
+			class="vn.com.stanford.je1019.onlinecourses.action_theme.DangKyAction" method="dangKyTaiKhoan">
+			<result type="redirectAction">trangchu</result>
+			<result name="input" type="tiles">DangKy</result>
+		</action>
+		
+		<action name="thongTinChiTietBaiGiang"
+			class="vn.com.stanford.je1019.onlinecourses.action_theme.BaiGiangDetailAction">
+			<result name="success" type="tiles">ThongTinChiTietBaiGiang</result>
+		</action>
+		<action name="themNhanXetTiles"
+			class="vn.com.stanford.je1019.onlinecourses.action_theme.NhanXetAction"
+			method="themNhanXetTiles">					
+ 		   <result name="success" type="tiles">ThongTinChiTietBaiGiang</result>   			
+		</action>
+		
+      <action name="khoahocmienphi"
+			class="vn.com.stanford.je1019.onlinecourses.action_theme.KhoaHocAction"
+			method="khoahocmienphi">			
+			<result name="success" type="tiles">KhoaHocMienPhi</result>
+	  </action>
+		
+	</package>
+</struts>

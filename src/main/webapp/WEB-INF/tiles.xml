@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Khai báo kiểu cho file tiles -->
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	
+	<!-- Khai báo template admin -->
+	<definition name="baseLayoutAdmin"
+		template="/WEB-INF/admin/layout.jsp">
+		<put-attribute name="title" value="Template" />
+		<put-attribute name="header"
+			value="/WEB-INF/admin/header.jsp" />
+		<put-attribute name="menu"
+			value="/WEB-INF/admin/menu.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/admin/body.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/admin/footer.jsp" />
+	</definition>	
+	<!-- Khai báo template theme -->
+	<definition name="baseLayoutTheme"
+		template="/WEB-INF/theme/layout.jsp">
+		<put-attribute name="title" value="Template" />
+		<put-attribute name="header"
+			value="/WEB-INF/theme/header.jsp" />		
+		<put-attribute name="body"
+			value="/WEB-INF/theme/body.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/theme/footer.jsp" />
+	</definition>
+	
+
+	<!-- Khai báo các view -->
+	<definition name="QuanLyLoai" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Quản lý phân loại" />
+		<put-attribute name="body" value="/admin/quanlyloai.jsp" />
+	</definition>
+	<definition name="QuanLyChuDe" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Quản lý chủ đề" />
+		<put-attribute name="body"
+			value="/admin/quanlychude.jsp" />
+	</definition>
+	<definition name="themChuDe" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Thêm chủ đề" />
+		<put-attribute name="body"
+			value="/admin/chudeAdd.jsp" />
+	</definition>	
+	<definition name="QuanLyGiangVien" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Quản lý giảng viên" />
+		<put-attribute name="body"
+			value="/admin/quanlygiangvien.jsp" />
+	</definition>
+	<definition name="themGiangVien" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Thêm giảng viên" />
+		<put-attribute name="body"
+			value="/admin/giangvienAdd.jsp" />
+	</definition>
+	<definition name="QuanLyKhachHang" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Quản lý khách hàng" />
+		<put-attribute name="body"
+			value="/admin/quanlykhachhang.jsp" />
+	</definition>
+	<definition name="QuanLyHoaDon" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Quản lý hóa đơn" />
+		<put-attribute name="body"
+			value="/admin/quanlyhoadon.jsp" />
+	</definition>
+	<definition name="QuanLyKhoaHoc" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Quản lý khóa học" />
+		<put-attribute name="body"
+			value="/admin/quanlykhoahoc.jsp" />
+	</definition>
+	<definition name="themKhoaHoc" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Thêm khóa học" />
+		<put-attribute name="body"
+			value="/admin/khoahocAdd.jsp" />
+	</definition>
+	<definition name="QuanLyChiTietHoaDon"
+		extends="baseLayoutAdmin">
+		<put-attribute name="title"
+			value="Quản lý chi tiết hóa đơn" />
+		<put-attribute name="body"
+			value="/admin/quanlychitiethoadon.jsp" />
+	</definition>
+	<definition name="QuanLyBaiGiang" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Quản lý bài giảng" />
+		<put-attribute name="body"
+			value="/admin/quanlybaigiang.jsp" />
+	</definition>
+	<definition name="themBaiGiang" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Thêm bài giảng" />
+		<put-attribute name="body"
+			value="/admin/baigiangAdd.jsp" />
+	</definition>
+	<definition name="QuanLyChucNang" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Quản lý chức năng" />
+		<put-attribute name="body"
+			value="/admin/quanlychucnang.jsp" />
+	</definition>
+	<definition name="QuanLyNguoiDung" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Quản lý người dùng" />
+		<put-attribute name="body"
+			value="/admin/quanlynguoidung.jsp" />
+	</definition>
+	<definition name="QuanLyVaiTro" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Quản lý vai trò" />
+		<put-attribute name="body"
+			value="/admin/quanlyvaitro.jsp" />
+	</definition>
+	<definition name="QuanLyPhanQuyen" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Quản lý phân quyền" />
+		<put-attribute name="body"
+			value="/admin/quanlyphanquyen.jsp" />
+	</definition>
+	<definition name="QuanLyNhatKy" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Quản lý nhật ký" />
+		<put-attribute name="body"
+			value="/admin/quanlynhatky.jsp" />
+	</definition>
+	<definition name="QuanLyCapDo" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Quản lý cấp độ" />
+		<put-attribute name="body"
+			value="/admin/quanlycapdo.jsp" />
+	</definition>
+	<definition name="QuanLyNhanXet" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Quản lý nhận xét" />
+		<put-attribute name="body"
+			value="/admin/quanlynhanxet.jsp" />
+	</definition>
+	<definition name="QuanLyNguoiDung_KhoaHoc"
+		extends="baseLayoutAdmin">
+		<put-attribute name="title"
+			value="Quản lý Người dùng - Khóa học" />
+		<put-attribute name="body"
+			value="/admin/quanlynguoidung_khoahoc.jsp" />
+	</definition>
+
+	<!-- trang chu -->
+	<definition name="QuanLyTrangChu" extends="baseLayoutAdmin">
+		<put-attribute name="title" value="Quản lý Trang Chủ" />
+		<put-attribute name="body"
+			value="/admin/quanlytrangchu_tiles.jsp" />
+	</definition>
+	
+	
+	<!-- Theme -->
+	<definition name="TrangChu" extends="baseLayoutTheme">
+		<put-attribute name="title" value="Trang Chủ" />
+		<put-attribute name="body"
+			value="/web_tiles/trangchu.jsp" />
+	</definition>	
+    <definition name="DangKy" extends="baseLayoutTheme">
+		<put-attribute name="title" value="Đăng Ký" />
+		<put-attribute name="body"
+			value="/web_tiles/dangky.jsp" />
+	</definition>
+   <definition name="AboutUs" extends="baseLayoutTheme">
+		<put-attribute name="title" value="Thông tin về chúng tôi" />
+		<put-attribute name="body"
+			value="/web_tiles/aboutUs.jsp" />
+	</definition>	
+	 <definition name="KhoaHoc" extends="baseLayoutTheme">
+		<put-attribute name="title" value="Thông tin về khóa học" />
+		<put-attribute name="body"
+			value="/web_tiles/khoahoc.jsp" />
+	</definition>
+	<definition name="BaiGiang" extends="baseLayoutTheme">
+		<put-attribute name="title" value="Thông tin về bài giảng" />
+		<put-attribute name="body"
+			value="/web_tiles/baigiang.jsp" />
+	</definition>
+	<definition name="BaiGiangTheoKhoaHoc" extends="baseLayoutTheme">
+		<put-attribute name="title" value="Thông tin về bài giảng tìm kiếm theo khóa học" />
+		<put-attribute name="body"
+			value="/web_tiles/baigiangtheokhoahoc.jsp" />
+	</definition>
+	<definition name="ChuDe" extends="baseLayoutTheme">
+		<put-attribute name="title" value="Thông tin về chủ đề" />
+		<put-attribute name="body"
+			value="/web_tiles/chude.jsp" />
+	</definition>
+	<definition name="ThongTinChiTietBaiGiang"	extends="baseLayoutTheme">
+		<put-attribute name="title" value="Chi tiết bài giảng" />
+		<put-attribute name="body"
+			value="/web_tiles/baiGiangDetail.jsp" />
+	</definition>
+	<definition name="KhoaHocMienPhi" extends="baseLayoutTheme">
+		<put-attribute name="title" value="Thông tin về khóa học miễn phí" />
+		<put-attribute name="body"
+			value="/web_tiles/khoahocmienphi.jsp" />
+	</definition>
+	
+</tiles-definitions>
